@@ -1,4 +1,3 @@
-# responseEval
 # SpeakEasy
 SpeakEasy is an iOS application designed to help English learners improve reading, vocabulary, and pronunciation skills using real-world materials like menus, notes, slides, screenshots, handouts, and printed text.
 
