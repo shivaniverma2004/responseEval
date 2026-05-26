@@ -1,4 +1,4 @@
-# SpeakEasy — iOS App Build Brief
+# SpeakEasy: iOS App Build Brief
 
 > An iOS app for people who lack confidence in speaking, writing, or understanding English. SpeakEasy helps users learn vocabulary, practice pronunciation, and build fluency through AI feedback, structured reading, and a reward-based progress system.
 
@@ -6,7 +6,7 @@
 
 ## The Problem
 
-Millions of people struggle with English not because they lack intelligence, but because they've never had a safe, private space to practice. SpeakEasy is that space. A user should be able to photograph any text in the real world — a menu, a letter, a sign — have it extracted, read it at their own pace, tap any word they don't understand, practice saying it out loud, get honest feedback, and save it for later review.
+Millions of people struggle with English not because they lack intelligence, but because they've never had a safe, private space to practice. SpeakEasy is that space. A user should be able to photograph any text in the real world — a menu, a letter, a sign : have it extracted, read it at their own pace, tap any word they don't understand, practice saying it out loud, get honest feedback, and save it for later review.
 
 The core engineering challenges are **offline reliability**, **audio session management**, and **UI responsiveness under load**:
 
@@ -25,20 +25,20 @@ Everything else is secondary to getting those four things right.
 
 | Concern | Technology |
 |---|---|
-| Language | Swift (latest) — protocols, async/await, value types |
-| UI Framework | SwiftUI — native performance, declarative state management |
+| Language | Swift (latest) : protocols, async/await, value types |
+| UI Framework | SwiftUI : native performance, declarative state management |
 | Architecture | MVVM |
 | Local Storage | Core Data |
-| Auth / Backend | Supabase — login, signup, session persistence only |
+| Auth / Backend | Supabase : login, signup, session persistence only |
 | Apple Frameworks | AVFoundation, Speech, Vision |
 | APIs | Gemini (free tier), Free Dictionary API |
 | Security | JWT + Keychain, no hardcoded keys |
 
 **MVVM responsibilities:**
-- **Views** — rendering and state binding only
-- **ViewModels** — all API calls, business logic, and state
-- **Managers** — cross-cutting concerns (audio, OCR, CoreData)
-- **Utilities** — pure helpers
+- **Views** : rendering and state binding only
+- **ViewModels** : all API calls, business logic, and state
+- **Managers** : cross-cutting concerns (audio, OCR, CoreData)
+- **Utilities** : pure helpers
 
 If a View contains business logic or a ViewModel imports UIKit directly, something is wrong.
 
@@ -48,12 +48,12 @@ If a View contains business logic or a ViewModel imports UIKit directly, somethi
 
 These are **hard requirements**, not aspirational goals.
 
-- OCR runs fully offline using Apple Vision — no network call under any condition
-- Reader screen scrolls smoothly for extracted text up to 10,000 words — no blocking the main thread
-- Audio recording and TTS playback use a shared `AVAudioSession` managed centrally — no conflicts, no crashes on rapid tap
-- Multi-image import (up to 20 images) processes without freezing the UI — async background queues
-- Core Data reads never block the main thread — use `NSAsynchronousFetchRequest` or background contexts for heavy fetches
-- Camera and gallery permission prompts appear exactly once, when the feature is first triggered — not on app launch
+- OCR runs fully offline using Apple Vision, no network call under any condition
+- Reader screen scrolls smoothly for extracted text up to 10,000 words, no blocking the main thread
+- Audio recording and TTS playback use a shared `AVAudioSession` managed centrally, no conflicts, no crashes on rapid tap
+- Multi-image import (up to 20 images) processes without freezing the UI, async background queues
+- Core Data reads never block the main thread, use `NSAsynchronousFetchRequest` or background contexts for heavy fetches
+- Camera and gallery permission prompts appear exactly once, when the feature is first triggered, not on app launch
 
 ---
 
@@ -103,7 +103,7 @@ SpeakEasy/
 ├── Resources/
 │   └── SpeakEasy.xcdatamodeld
 └── Configuration/
-    └── Config.swift           # reads keys from Info.plist / xcconfig — never hardcoded
+    └── Config.swift           # reads keys from Info.plist / xcconfig : never hardcoded
 ```
 
 ---
@@ -163,7 +163,7 @@ SpeakEasy/
 
 ## Authentication Flow
 
-Supabase handles auth. Core Data is untouched by auth state — data persists regardless of login status.
+Supabase handles auth. Core Data is untouched by auth state, data persists regardless of login status.
 
 ### Login Screen
 - Email field, password field, Login button
@@ -191,13 +191,13 @@ Supabase handles auth. Core Data is untouched by auth state — data persists re
 - Clears Keychain token
 - Calls Supabase `signOut`
 - Navigates to login
-- Core Data is **not** touched — all local data remains
+- Core Data is **not** touched - all local data remains
 
 ---
 
 ## Navigation Structure
 
-Four bottom tabs. Tab state is preserved on switch — no resets.
+Four bottom tabs. Tab state is preserved on switch - no resets.
 
 ```
 TabView
@@ -207,7 +207,7 @@ TabView
 └── Profile
 ```
 
-Navigation uses `NavigationStack` throughout. `Sheet` and `fullScreenCover` presentations are used for capture/review flows only — not for primary navigation.
+Navigation uses `NavigationStack` throughout. `Sheet` and `fullScreenCover` presentations are used for capture/review flows only - not for primary navigation.
 
 ---
 
@@ -221,8 +221,8 @@ Navigation uses `NavigationStack` throughout. `Sheet` and `fullScreenCover` pres
 Tapping **Camera** requests permission if not granted, then opens the native camera. Tapping **Gallery** opens `PHPickerViewController` for multi-select.
 
 **Below:** Two horizontal scrollable sections:
-- **Recent Projects** — last 5 opened, rounded cards with thumbnail and image count
-- **Recent Words** — last 5 practiced words, showing word, score badge, difficulty level
+- **Recent Projects** - last 5 opened, rounded cards with thumbnail and image count
+- **Recent Words** - last 5 practiced words, showing word, score badge, difficulty level
 
 ---
 
@@ -259,19 +259,19 @@ The reader is the core screen of the app. Every element of it matters.
 
 **Text display:** Scrollable, formatted text. Every word is individually tappable. Use a custom `TextTokenizer` to split text into word tokens and render them as a flow layout or using `Text` with custom tap gestures.
 
-**Bottom bar — three controls:**
+**Bottom bar - three controls:**
 
-- **Format** — Font size (slider, 14–28pt), letter spacing, line height, theme toggle (light / sepia / dark)
-- **Listen** — Play/pause TTS using `AVSpeechSynthesizer`. Speech rate slider. Highlight the current word being spoken as it plays.
-- **AI** — Four options: Summarize, Simplify, Explain Grammar, Generate Quiz. Each sends extracted text to Gemini and displays the response in a sheet. Show a loading state during the API call. Handle failures gracefully with a retry option.
+- **Format** - Font size (slider, 14–28pt), letter spacing, line height, theme toggle (light / sepia / dark)
+- **Listen** - Play/pause TTS using `AVSpeechSynthesizer`. Speech rate slider. Highlight the current word being spoken as it plays.
+- **AI** - Four options: Summarize, Simplify, Explain Grammar, Generate Quiz. Each sends extracted text to Gemini and displays the response in a sheet. Show a loading state during the API call. Handle failures gracefully with a retry option.
 
 **Word tap:** On tapping any word, open a bottom sheet (not full screen) showing:
 
 - The word, large and clear
 - Pronunciation audio button (uses `AVSpeechSynthesizer` to speak the word)
 - Meaning (fetched from Free Dictionary API, cached in memory for the session)
-- "Practice" button → opens Pronunciation Practice
-- "Add to Word Basket" button → saves to Core Data with haptic feedback confirmation
+- "Practice" button - opens Pronunciation Practice
+- "Add to Word Basket" button - saves to Core Data with haptic feedback confirmation
 
 ---
 
@@ -284,7 +284,7 @@ Triggered from the word tap sheet or from the Word Basket.
 3. Record using `AVAudioRecorder`. Show a live waveform or animated indicator.
 4. On stop, transcribe using `SFSpeechRecognizer`
 5. Compare transcription to target word using normalized string similarity (case-insensitive, handle common phonetic variations)
-6. Display: percentage score (0–100%), a short message ("Great job!", "Almost there — try again"), and a Retry button
+6. Display: percentage score (0–100%), a short message ("Great job!", "Almost there - try again"), and a Retry button
 7. On score ≥ 70%, save a `PracticeSession` to Core Data linked to the `WordEntry`. Update difficulty level based on score history.
 
 Scores are never sent to any server. All processing is on-device.
@@ -301,7 +301,7 @@ Each word card shows:
 - Difficulty badge (color-coded: green / yellow / red)
 - Best score from practice history
 
-Tap to expand → full meaning, full practice history chart, Practice button.
+Tap to expand - full meaning, full practice history chart, Practice button.
 
 Search bar at the top filters words **client-side**. No network call for search.
 
@@ -328,7 +328,7 @@ Tapping a project opens a detail screen showing all images in a grid. Tapping an
 Displays:
 - User's full name, email (or "Guest" if unauthenticated)
 - Total projects, total saved words, total practice sessions
-- Logout button — clears session, navigates to login (Core Data untouched)
+- Logout button - clears session, navigates to login (Core Data untouched)
 
 For guests, show a non-intrusive banner: *"Create an account to back up your progress in the future."*
 
@@ -347,7 +347,7 @@ All Gemini calls go through `GeminiService`. The service takes a `GeminiRequest`
 | Explain Grammar | `"Identify and explain 3–5 grammar patterns in this text suitable for an English learner: [text]"` |
 | Generate Quiz | `"Generate 5 multiple-choice comprehension questions from this text. Return as JSON array with question, options[], answer fields."` |
 
-Quiz responses are parsed and rendered as an **interactive quiz sheet** — not displayed as raw text.
+Quiz responses are parsed and rendered as an **interactive quiz sheet** - not displayed as raw text.
 
 API key is loaded from `Config.swift` which reads from a `.xcconfig` file excluded from version control. **Never hardcoded. Never logged.**
 
@@ -369,16 +369,16 @@ Every failure is handled at the layer it occurs. No raw error strings reach the 
 | No internet (AI/Dictionary) | Show offline banner; OCR and Core Data features continue unaffected |
 
 **Input validation rules:**
-- **Email** — standard RFC format check before any network call
-- **Password** — minimum 8 characters, validated client-side
-- **Project name** — non-empty, max 50 characters, trimmed
-- **Pronunciation recording** — minimum 0.5 seconds, reject silence
+- **Email** - standard RFC format check before any network call
+- **Password** - minimum 8 characters, validated client-side
+- **Project name** - non-empty, max 50 characters, trimmed
+- **Pronunciation recording** - minimum 0.5 seconds, reject silence
 
 ---
 
 ## Security
 
-- JWT tokens stored in **Keychain only** — never `UserDefaults`, never logged
+- JWT tokens stored in **Keychain only** - never `UserDefaults`, never logged
 - Gemini and Supabase keys loaded from `.xcconfig`, excluded from version control via `.gitignore`
 - No user content (images, text, words, scores) ever leaves the device to any backend
 - Microphone and camera access requested contextually, with a clear usage description in `Info.plist`
