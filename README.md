@@ -1,5 +1,6 @@
 # SpeakEasy
 Screenshots: https://photos.app.goo.gl/zZ1xNmrEqWeRGBge9
+---
 SpeakEasy is an iOS application designed to help English learners improve reading, vocabulary, and pronunciation skills using real-world materials like menus, notes, slides, screenshots, handouts, and printed text.
 
 The app uses on-device text recognition to extract text from images, then provides a clean reading experience with pronunciation support, AI-powered tools, vocabulary saving, dictionary guide and speaking practice.
