@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSCameraUsageDescription</key>
+	<string>SpeakEasy uses the camera so you can capture pages and extract text for reading practice.</string>
+	<key>NSCameraReactionEffectGesturesEnabledDefault</key>
+	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>SpeakEasy accesses your photos so you can choose images to extract text and study words.</string>
+</dict>
+</plist>

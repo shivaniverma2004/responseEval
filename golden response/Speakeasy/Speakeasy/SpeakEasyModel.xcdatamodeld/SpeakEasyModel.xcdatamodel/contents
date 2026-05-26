@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ProjectEntity" representedClassName="ProjectEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProjectImageEntity" inverseName="project" inverseEntity="ProjectImageEntity"/>
+    </entity>
+    <entity name="ProjectImageEntity" representedClassName="ProjectImageEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="extractedText" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageFilePath" attributeType="String"/>
+        <attribute name="languageTag" optional="YES" attributeType="String"/>
+        <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectEntity" inverseName="images" inverseEntity="ProjectEntity"/>
+    </entity>
+    <entity name="SettingsEntity" representedClassName="SettingsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="dailyTarget" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+        <attribute name="onboardingCompleted" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="themePreferences" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="WordEntryEntity" representedClassName="WordEntryEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="addedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="attempts" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastScore" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="word" attributeType="String"/>
+        <relationship name="practiceAttempts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PracticeAttemptEntity" inverseName="wordEntry" inverseEntity="PracticeAttemptEntity"/>
+    </entity>
+    <entity name="PracticeAttemptEntity" representedClassName="PracticeAttemptEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="audioFilePath" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="score" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="wordEntry" maxCount="1" deletionRule="Nullify" destinationEntity="WordEntryEntity" inverseName="practiceAttempts" inverseEntity="WordEntryEntity"/>
+    </entity>
+</model>
+
